@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">stroke-android</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="preference_file_key">com.stroke.stroke-android.PREFERENCE_FILE_KEY</string>
+    <string name="is_onboarding_shown_key">is_onboarding_shown</string>
 </resources>
