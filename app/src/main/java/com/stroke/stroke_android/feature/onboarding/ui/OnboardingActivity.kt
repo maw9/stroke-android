@@ -1,6 +1,7 @@
 package com.stroke.stroke_android.feature.onboarding.ui
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,6 +31,16 @@ class OnboardingActivity : AppCompatActivity() {
 
         val adapter = OnboardingSlideAdapter(this)
         binding.pager.adapter = adapter
+
+        this.onBackPressedDispatcher.addCallback(this) {
+            if (binding.pager.currentItem == 0) {
+                finish()
+            } else {
+                binding.pager.currentItem -= 1
+            }
+        }
     }
+
+
 
 }

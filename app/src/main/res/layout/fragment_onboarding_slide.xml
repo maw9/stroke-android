@@ -13,7 +13,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/bree_serif"
-        android:text="Seamless Access"
+        tools:text="Seamless Access"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +40,7 @@
         android:layout_marginBottom="24dp"
         android:fontFamily="@font/open_sans"
         android:lineSpacingExtra="4sp"
-        android:text="Easily log in to access your personalized art gallery experience. Save your progress, view your favorites, and pick up where you left off across all your devices.  "
+        tools:text="Easily log in to access your personalized art gallery experience. Save your progress, view your favorites, and pick up where you left off across all your devices.  "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
