@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "62353838837",
+    "project_id": "stroke-android",
+    "storage_bucket": "stroke-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62353838837:android:40dd681c2fa7c6ad2b2bbc",
+        "android_client_info": {
+          "package_name": "com.stroke.stroke_android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Ch2FVs1rR2kGB6kK9n_M_GJG6x45UWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
