@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.FragmentHomeBinding
 import com.stroke.stroke_android.feature.home.ui.adapter.PostsAdapter
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomePostsUIState
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomeViewModel
+import com.stroke.stroke_android.feature.postdetails.PostDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -34,7 +36,17 @@ class HomeFragment : Fragment() {
             .load("https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg")
             .into(binding.sivProfile)
 
-        val adapter = PostsAdapter()
+        val adapter = PostsAdapter {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(
+                    R.id.fragmentContainerView,
+                    PostDetailsFragment.getInstance(),
+                    "post_details"
+                )
+                .addToBackStack(null)
+                .commit()
+        }
         binding.rvPosts.adapter = adapter
 
         viewModel.postsLiveData.observe(viewLifecycleOwner) {

@@ -8,11 +8,13 @@ import com.stroke.stroke_android.databinding.ItemPostBinding
 import com.stroke.stroke_android.feature.home.ui.model.Post
 import com.stroke.stroke_android.feature.home.ui.viewholder.ItemPostVH
 
-class PostsAdapter : ListAdapter<Post, ItemPostVH>(PostsDiffUtil) {
+class PostsAdapter(private val onClick: (String) -> Unit) :
+    ListAdapter<Post, ItemPostVH>(PostsDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemPostVH {
         return ItemPostVH(
-            ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onClick
         )
     }
 

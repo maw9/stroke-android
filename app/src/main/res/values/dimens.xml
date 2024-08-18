@@ -45,5 +45,6 @@
     <dimen name="text_big_3x">80sp</dimen>
 
     <dimen name="home_profile_size">58dp</dimen>
+    <dimen name="post_details_profile_size">28dp</dimen>
     <dimen name="post_owner_profile_size">48dp</dimen>
 </resources>

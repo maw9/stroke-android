@@ -8,7 +8,8 @@ import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.ItemPostBinding
 import com.stroke.stroke_android.feature.home.ui.model.Post
 
-class ItemPostVH(private val binding: ItemPostBinding) : ViewHolder(binding.root) {
+class ItemPostVH(private val binding: ItemPostBinding, private val onClick: (String) -> Unit) :
+    ViewHolder(binding.root) {
 
     fun bind(data: Post) {
         data.owner?.apply {
@@ -23,6 +24,8 @@ class ItemPostVH(private val binding: ItemPostBinding) : ViewHolder(binding.root
             binding.root.context,
             if (data.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_outlined
         )
+
+        binding.root.setOnClickListener { onClick(data.id) }
     }
 
 }

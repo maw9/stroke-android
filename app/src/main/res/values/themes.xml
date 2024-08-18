@@ -153,5 +153,18 @@
         <item name="android:textColor">@color/color_on_bg_50</item>
     </style>
 
+    <style name="ShapeAppearance.StrokeAndroid.PostDetailImage" parent="ShapeAppearance.Material3.Corner.Large">
+        <item name="shapeCornerFamily">cut</item>
+        <item name="cornerSize">0dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
+    </style>
+
+    <style name="ThemeOverlay.StrokeAndroid.PostDetailDescription" parent="">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.StrokeAndroid.PostCreatedAt" parent="">
+        <item name="android:textColor">@color/color_on_bg_50</item>
+    </style>
 
 </resources>
