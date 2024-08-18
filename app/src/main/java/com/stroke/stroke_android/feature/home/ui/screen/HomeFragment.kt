@@ -12,7 +12,7 @@ import com.stroke.stroke_android.databinding.FragmentHomeBinding
 import com.stroke.stroke_android.feature.home.ui.adapter.PostsAdapter
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomePostsUIState
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomeViewModel
-import com.stroke.stroke_android.feature.postdetails.PostDetailsFragment
+import com.stroke.stroke_android.feature.postdetails.ui.screen.PostDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
                 .beginTransaction()
                 .replace(
                     R.id.fragmentContainerView,
-                    PostDetailsFragment.getInstance(),
+                    PostDetailsFragment.getInstance(it),
                     "post_details"
                 )
                 .addToBackStack(null)

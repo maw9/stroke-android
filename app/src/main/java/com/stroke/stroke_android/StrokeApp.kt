@@ -6,6 +6,9 @@ import com.stroke.stroke_android.common.di.localStorageModule
 import com.stroke.stroke_android.feature.home.di.homePostsDataSourceModule
 import com.stroke.stroke_android.feature.home.di.homePostsRepositoryModule
 import com.stroke.stroke_android.feature.home.di.homeViewModelModule
+import com.stroke.stroke_android.feature.postdetails.di.postDetailsDataSourceModule
+import com.stroke.stroke_android.feature.postdetails.di.postDetailsRepositoryModule
+import com.stroke.stroke_android.feature.postdetails.di.postDetailsViewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -21,7 +24,10 @@ class StrokeApp : Application() {
                 localStorageModule,
                 homeViewModelModule,
                 homePostsRepositoryModule,
-                homePostsDataSourceModule
+                homePostsDataSourceModule,
+                postDetailsViewModelModule,
+                postDetailsRepositoryModule,
+                postDetailsDataSourceModule
             )
         }
 

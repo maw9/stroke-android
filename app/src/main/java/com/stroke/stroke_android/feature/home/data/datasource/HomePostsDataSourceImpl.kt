@@ -13,7 +13,7 @@ class HomePostsDataSourceImpl(private val httpClient: HttpClient) : HomePostsDat
 
     override suspend fun getPosts(): Result<List<Post>> {
         return handle<List<PostResponse>> {
-            httpClient.get("https://api.unsplash.com/photos") {
+            httpClient.get("photos") {
                 url {
                     parameters.append("client_id", ACCESS_KEY)
                 }
