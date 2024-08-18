@@ -13,10 +13,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/bree_serif"
-        tools:text="Seamless Access"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Seamless Access" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"

@@ -1,14 +1,10 @@
-package com.stroke
+package com.stroke.stroke_android
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.firebase.ui.auth.AuthUI
-import com.stroke.stroke_android.MainActivity
-import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -26,19 +22,19 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        binding.btnLogout.setOnClickListener {
-            AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener {
-                    startActivity(
-                        Intent(this, MainActivity::class.java).also {
-                            it.addFlags(
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            )
-                        }
-                    )
-                }
-        }
+//        binding.btnLogout.setOnClickListener {
+//            AuthUI.getInstance()
+//                .signOut(this)
+//                .addOnCompleteListener {
+//                    startActivity(
+//                        Intent(this, MainActivity::class.java).also {
+//                            it.addFlags(
+//                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                            )
+//                        }
+//                    )
+//                }
+//        }
 
     }
 

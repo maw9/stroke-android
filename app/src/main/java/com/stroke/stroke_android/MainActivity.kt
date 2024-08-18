@@ -12,7 +12,6 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import com.stroke.HomeActivity
 import com.stroke.stroke_android.feature.onboarding.ui.OnboardingActivity
 import org.koin.android.ext.android.inject
 
