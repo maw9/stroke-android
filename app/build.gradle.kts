@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -55,15 +56,15 @@ dependencies {
     implementation(libs.koin.android)
 
     // Lottie
-    implementation (libs.lottie)
+    implementation(libs.lottie)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    implementation (libs.firebase.ui.auth)
+    implementation(libs.firebase.ui.auth)
 
     // Glide
-    implementation (libs.glide)
+    implementation(libs.glide)
 
     // Ktor
     implementation(libs.ktor.client.core)

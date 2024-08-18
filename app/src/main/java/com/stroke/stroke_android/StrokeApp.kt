@@ -1,6 +1,7 @@
 package com.stroke.stroke_android
 
 import android.app.Application
+import com.stroke.stroke_android.common.di.ktorNetworkModule
 import com.stroke.stroke_android.common.di.localStorageModule
 import com.stroke.stroke_android.feature.home.di.homePostsDataSourceModule
 import com.stroke.stroke_android.feature.home.di.homePostsRepositoryModule
@@ -16,6 +17,7 @@ class StrokeApp : Application() {
         startKoin {
             androidContext(this@StrokeApp)
             modules(
+                ktorNetworkModule,
                 localStorageModule,
                 homeViewModelModule,
                 homePostsRepositoryModule,

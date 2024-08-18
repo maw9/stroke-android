@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+//        FirebaseAuth.getInstance().currentUser.
+
         val isStartOnboarding = sharedPreferences.getBoolean(
             getString(R.string.is_onboarding_shown_key),
             false
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, OnboardingActivity::class.java).also {
                 it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             })
+            return
         }
 
         if (FirebaseAuth.getInstance().currentUser == null) {

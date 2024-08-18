@@ -5,6 +5,6 @@ data class Post(
     val description: String,
     val createdAt: String,
     val imageUrl: String,
-    val owner: User,
+    val owner: User?,
     var isFavorite: Boolean
 )

@@ -11,7 +11,7 @@ import com.stroke.stroke_android.feature.home.ui.model.Post
 class ItemPostVH(private val binding: ItemPostBinding) : ViewHolder(binding.root) {
 
     fun bind(data: Post) {
-        data.owner.apply {
+        data.owner?.apply {
             Glide.with(binding.root.context).load(profileImageUrl).into(binding.sivProfile)
             binding.tvOwnerName.text = name
         }
