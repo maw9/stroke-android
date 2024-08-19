@@ -12,6 +12,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.FragmentPostDetailsBinding
+import com.stroke.stroke_android.feature.postdetails.ui.model.PostDetail
 import com.stroke.stroke_android.feature.postdetails.ui.viewmodel.PostDetailsUIState
 import com.stroke.stroke_android.feature.postdetails.ui.viewmodel.PostDetailsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,51 +43,66 @@ class PostDetailsFragment(private val id: String) : Fragment() {
         viewModel.detailsLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 PostDetailsUIState.Loading -> {
-                    binding.pbDetailsLoading.visibility = View.VISIBLE
+                    showLoading()
                 }
 
                 is PostDetailsUIState.Success -> {
-                    binding.pbDetailsLoading.visibility = View.GONE
-
-                    Glide.with(requireContext())
-                        .load(it.data?.imageUrl)
-                        .into(binding.ivPostImage)
-
-                    (binding.btnFavorite as MaterialButton).icon = AppCompatResources.getDrawable(
-                        binding.root.context,
-                        if (it.data?.isFavorite == true) {
-                            R.drawable.ic_favorite
-                        } else {
-                            R.drawable.ic_favorite_outlined
-                        }
-                    )
-
-                    binding.tvDescription.text = it.data?.description.orEmpty()
-
-                    binding.tvCreatedAt.text = it.data?.createdAt.orEmpty()
-
-                    Glide.with(requireContext())
-                        .load(it.data?.owner?.profileImageUrl)
-                        .into(binding.ivUserProfile)
-
-                    binding.tvUsername.text = it.data?.owner?.name.orEmpty()
-
-                    it.data?.tags?.map {
-                        Chip(requireContext()).also { chip ->
-                            chip.text = it
-                        }
-                    }?.forEach { chip ->
-                        binding.chipGpTags.addView(chip)
-                    }
+                    hideLoading()
+                    bindPostDetails(it.data)
                 }
 
                 is PostDetailsUIState.Error -> {
-                    binding.pbDetailsLoading.visibility = View.GONE
+                    hideLoading()
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
                 }
             }
         }
 
+    }
+
+    private fun showLoading() {
+        binding.vLoadingBg.visibility = View.VISIBLE
+        binding.pbDetailsLoading.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        binding.vLoadingBg.visibility = View.INVISIBLE
+        binding.pbDetailsLoading.visibility = View.INVISIBLE
+    }
+
+    private fun bindPostDetails(data: PostDetail?) {
+        binding.ivPostImageBlur.setImageBitmap(data?.blurredBitmap)
+
+        Glide.with(requireContext())
+            .load(data?.imageUrl)
+            .into(binding.ivPostImage)
+
+        (binding.btnFavorite as MaterialButton).icon = AppCompatResources.getDrawable(
+            binding.root.context,
+            if (data?.isFavorite == true) {
+                R.drawable.ic_favorite
+            } else {
+                R.drawable.ic_favorite_outlined
+            }
+        )
+
+        binding.tvDescription.text = data?.description.orEmpty()
+
+        binding.tvCreatedAt.text = data?.createdAt.orEmpty()
+
+        Glide.with(requireContext())
+            .load(data?.owner?.profileImageUrl)
+            .into(binding.ivUserProfile)
+
+        binding.tvUsername.text = data?.owner?.name.orEmpty()
+
+        data?.tags?.map {
+            Chip(requireContext()).also { chip ->
+                chip.text = it
+            }
+        }?.forEach { chip ->
+            binding.chipGpTags.addView(chip)
+        }
     }
 
     override fun onDestroyView() {

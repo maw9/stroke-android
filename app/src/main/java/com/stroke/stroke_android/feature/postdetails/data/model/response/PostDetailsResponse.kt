@@ -12,6 +12,9 @@ data class PostDetailsResponse(
     @SerialName("created_at")
     val createdAt: String?,
 
+    @SerialName("blur_hash")
+    val blurHash: String?,
+
     val width: Int?,
 
     val height: Int?,

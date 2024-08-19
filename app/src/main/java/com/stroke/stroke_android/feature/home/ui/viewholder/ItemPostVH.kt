@@ -12,6 +12,9 @@ class ItemPostVH(private val binding: ItemPostBinding, private val onClick: (Str
     ViewHolder(binding.root) {
 
     fun bind(data: Post) {
+
+        binding.ivPostImageBlur.setImageBitmap(data.blurHash)
+
         data.owner?.apply {
             Glide.with(binding.root.context).load(profileImageUrl).into(binding.sivProfile)
             binding.tvOwnerName.text = name

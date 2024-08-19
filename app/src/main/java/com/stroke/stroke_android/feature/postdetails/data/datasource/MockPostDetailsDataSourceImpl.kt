@@ -11,6 +11,7 @@ class MockPostDetailsDataSourceImpl : PostDetailsDataSource {
                 "0",
                 "A person working on a laptop with a pen",
                 "2024-07-18T19:49:40Z",
+                blurredBitmap = null,
                 "https://images.unsplash.com/photo-1721332150382-d4114ee27eff?ixid=M3w2MTQ5NTV8MHwxfGFsbHx8fHx8fHx8fDE3MjM5ODkyNzl8&ixlib=rb-4.0.3",
                 User(
                     id = "user7",

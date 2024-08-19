@@ -10,6 +10,9 @@ data class PostResponse(
     @SerialName("created_at")
     val createdAt: String?,
 
+    @SerialName("blur_hash")
+    val blurHash: String?,
+
     val width: Int?,
 
     val height: Int?,
@@ -24,9 +27,11 @@ data class PostResponse(
 
 @Serializable
 data class URLsResponse(
-    val raw: String?,
+    val regular: String?,
     val thumb: String?
-)
+) {
+    fun getImageUrl() = regular
+}
 
 @Serializable
 data class UserResponse(
