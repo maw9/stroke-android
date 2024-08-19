@@ -13,6 +13,7 @@ import com.stroke.stroke_android.feature.home.ui.adapter.PostsAdapter
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomePostsUIState
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomeViewModel
 import com.stroke.stroke_android.feature.postdetails.ui.screen.PostDetailsFragment
+import com.stroke.stroke_android.feature.search.ui.screen.SearchFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -31,6 +32,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.iBtnSearch.setOnClickListener { goToSearch() }
 
         Glide.with(this)
             .load("https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg")
@@ -68,10 +71,21 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun goToSearch() {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fragmentContainerView,
+                SearchFragment.getInstance(),
+                "search"
+            )
+            .addToBackStack(null)
+            .commit()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }
