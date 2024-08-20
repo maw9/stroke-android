@@ -9,6 +9,9 @@ import com.stroke.stroke_android.feature.home.di.homeViewModelModule
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsDataSourceModule
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsRepositoryModule
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsViewModelModule
+import com.stroke.stroke_android.feature.search.di.searchDataSourceModule
+import com.stroke.stroke_android.feature.search.di.searchRepositoryModule
+import com.stroke.stroke_android.feature.search.di.searchViewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -27,7 +30,10 @@ class StrokeApp : Application() {
                 homePostsDataSourceModule,
                 postDetailsViewModelModule,
                 postDetailsRepositoryModule,
-                postDetailsDataSourceModule
+                postDetailsDataSourceModule,
+                searchDataSourceModule,
+                searchRepositoryModule,
+                searchViewModelModule
             )
         }
 
