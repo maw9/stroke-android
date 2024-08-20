@@ -8,15 +8,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
+import com.stroke.stroke_android.feature.auth.data.repository.AuthRepository
 import com.stroke.stroke_android.feature.onboarding.ui.OnboardingActivity
+import com.stroke.stroke_android.util.exception.NewUserException
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private val authRepository: AuthRepository by inject()
     private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +34,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-//        FirebaseAuth.getInstance().currentUser.
-
         val isStartOnboarding = sharedPreferences.getBoolean(
             getString(R.string.is_onboarding_shown_key),
             false
@@ -42,11 +45,38 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        if (FirebaseAuth.getInstance().currentUser == null) {
+        lifecycleScope.launch {
+            authRepository.getCurrentUser().fold(
+                {
+                    navigateHome()
+                },
+                {
+                    if (it is NewUserException) {
+                        launchFirebaseAuthActivity()
+                    }
+                }
+            )
+        }
+
+        /*viewModel.authUserLiveData.observe(this) {
+                   when (it) {
+                       is AuthUIState.Success -> {
+                           navigateHome()
+                       }
+
+                       is AuthUIState.Error -> {
+                           if (it.error is NewUserException) {
+                               launchFirebaseAuthActivity()
+                           }
+                       }
+                   }
+               }*/
+
+/*        if (FirebaseAuth.getInstance().currentUser == null) {
             launchFirebaseAuthActivity()
         } else {
             navigateHome()
-        }
+        }*/
 
     }
 
@@ -70,7 +100,6 @@ class MainActivity : AppCompatActivity() {
             .setLogo(R.drawable.login_logo)
             .setTheme(R.style.AppTheme)
             .build()
-//            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         signInLauncher.launch(signInIntent)
     }
 
@@ -78,7 +107,6 @@ class MainActivity : AppCompatActivity() {
         val response = result.idpResponse
 
         if (result.resultCode == RESULT_OK) {
-            val user = FirebaseAuth.getInstance().currentUser
             navigateHome()
         } else {
             if (response == null) {

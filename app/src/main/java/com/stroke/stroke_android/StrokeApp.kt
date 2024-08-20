@@ -1,8 +1,12 @@
 package com.stroke.stroke_android
 
 import android.app.Application
+import com.stroke.stroke_android.common.di.firebaseModule
 import com.stroke.stroke_android.common.di.ktorNetworkModule
 import com.stroke.stroke_android.common.di.localStorageModule
+import com.stroke.stroke_android.feature.auth.di.authDataSourceModule
+import com.stroke.stroke_android.feature.auth.di.authRepositoryModule
+import com.stroke.stroke_android.feature.auth.di.authViewModelModule
 import com.stroke.stroke_android.feature.home.di.homePostsDataSourceModule
 import com.stroke.stroke_android.feature.home.di.homePostsRepositoryModule
 import com.stroke.stroke_android.feature.home.di.homeViewModelModule
@@ -33,7 +37,10 @@ class StrokeApp : Application() {
                 postDetailsDataSourceModule,
                 searchDataSourceModule,
                 searchRepositoryModule,
-                searchViewModelModule
+                searchViewModelModule,
+                firebaseModule,
+                authRepositoryModule,
+                authDataSourceModule,
             )
         }
 
