@@ -17,7 +17,7 @@ import com.stroke.stroke_android.feature.postdetails.ui.viewmodel.PostDetailsUIS
 import com.stroke.stroke_android.feature.postdetails.ui.viewmodel.PostDetailsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PostDetailsFragment(private val id: String) : Fragment() {
+class PostDetailsFragment : Fragment() {
 
     private var _binding: FragmentPostDetailsBinding? = null
     private val binding: FragmentPostDetailsBinding get() = _binding!!
@@ -34,11 +34,21 @@ class PostDetailsFragment(private val id: String) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val id = arguments?.getString("id")
+
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        viewModel.getPostDetails(id)
+        binding.materialCardView.setOnClickListener {
+            if (!viewModel.postImageUrl.isNullOrEmpty()) {
+                goToPhotoViewScreen(viewModel.postImageUrl!!)
+            }
+        }
+
+        if (!id.isNullOrEmpty()) {
+            viewModel.getPostDetails(id)
+        }
 
         viewModel.detailsLiveData.observe(viewLifecycleOwner) {
             when (it) {
@@ -58,6 +68,18 @@ class PostDetailsFragment(private val id: String) : Fragment() {
             }
         }
 
+    }
+
+    private fun goToPhotoViewScreen(imageUrl: String) {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fragmentContainerView,
+                PhotoViewFragment.getInstance(imageUrl),
+                "photo_view"
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun showLoading() {
@@ -111,7 +133,13 @@ class PostDetailsFragment(private val id: String) : Fragment() {
     }
 
     companion object {
-        fun getInstance(id: String) = PostDetailsFragment(id)
+        fun getInstance(id: String): PostDetailsFragment {
+            val args = Bundle()
+            args.putString("id", id)
+            return PostDetailsFragment().also {
+                it.arguments = args
+            }
+        }
     }
 
 }

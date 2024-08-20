@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
 import com.bumptech.glide.Glide
 import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.FragmentHomeBinding
@@ -39,12 +40,12 @@ class HomeFragment : Fragment() {
             .load("https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg")
             .into(binding.sivProfile)
 
-        val adapter = PostsAdapter {
+        val adapter = PostsAdapter { id ->
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(
                     R.id.fragmentContainerView,
-                    PostDetailsFragment.getInstance(it),
+                    PostDetailsFragment.getInstance(id),
                     "post_details"
                 )
                 .addToBackStack(null)

@@ -19,12 +19,15 @@ class PostDetailsViewModel(private val repository: PostDetailsRepository) : View
     private val _detailsLiveData: MutableLiveData<PostDetailsUIState> = MutableLiveData()
     val detailsLiveData: LiveData<PostDetailsUIState> get() = _detailsLiveData
 
+    var postImageUrl: String? = null
+
     fun getPostDetails(id: String) {
         _detailsLiveData.value = PostDetailsUIState.Loading
         viewModelScope.launch {
             repository.getPostDetails(id).fold(
                 {
                     _detailsLiveData.value = PostDetailsUIState.Success(it)
+                    postImageUrl = it?.imageUrl
                 },
                 {
                     _detailsLiveData.value =
