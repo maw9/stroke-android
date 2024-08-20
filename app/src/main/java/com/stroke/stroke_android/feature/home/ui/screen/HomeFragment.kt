@@ -1,12 +1,12 @@
 package com.stroke.stroke_android.feature.home.ui.screen
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
 import com.bumptech.glide.Glide
 import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.FragmentHomeBinding
@@ -14,13 +14,17 @@ import com.stroke.stroke_android.feature.home.ui.adapter.PostsAdapter
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomePostsUIState
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomeViewModel
 import com.stroke.stroke_android.feature.postdetails.ui.screen.PostDetailsFragment
+import com.stroke.stroke_android.feature.profile.ui.screen.UpdateProfileFragment
 import com.stroke.stroke_android.feature.search.ui.screen.SearchFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val sharedPreferences: SharedPreferences by inject()
 
     private val viewModel: HomeViewModel by viewModel()
 
@@ -33,6 +37,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedPreferences.getBoolean(getString(R.string.is_profile_data_filled), false).let {
+            if (!it) {
+                goToProfileUpdateScreen()
+            }
+        }
 
         binding.iBtnSearch.setOnClickListener { goToSearch() }
 
@@ -70,6 +80,17 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun goToProfileUpdateScreen() {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fragmentContainerView,
+                UpdateProfileFragment.getInstance(),
+                "update_profile"
+            )
+            .commit()
     }
 
     private fun goToSearch() {

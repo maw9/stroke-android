@@ -6,18 +6,21 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.stroke.stroke_android.feature.auth.data.repository.AuthRepository
 import com.stroke.stroke_android.feature.onboarding.ui.OnboardingActivity
-import com.stroke.stroke_android.util.exception.NewUserException
+import com.stroke.stroke_android.util.exception.UserNotLoginException
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,32 +54,12 @@ class MainActivity : AppCompatActivity() {
                     navigateHome()
                 },
                 {
-                    if (it is NewUserException) {
+                    if (it is UserNotLoginException) {
                         launchFirebaseAuthActivity()
                     }
                 }
             )
         }
-
-        /*viewModel.authUserLiveData.observe(this) {
-                   when (it) {
-                       is AuthUIState.Success -> {
-                           navigateHome()
-                       }
-
-                       is AuthUIState.Error -> {
-                           if (it.error is NewUserException) {
-                               launchFirebaseAuthActivity()
-                           }
-                       }
-                   }
-               }*/
-
-/*        if (FirebaseAuth.getInstance().currentUser == null) {
-            launchFirebaseAuthActivity()
-        } else {
-            navigateHome()
-        }*/
 
     }
 
@@ -107,7 +90,18 @@ class MainActivity : AppCompatActivity() {
         val response = result.idpResponse
 
         if (result.resultCode == RESULT_OK) {
-            navigateHome()
+            val uid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+            Firebase.firestore
+                .collection("profiles")
+                .document(uid)
+                .get().addOnSuccessListener { document ->
+                    sharedPreferences.edit {
+                        putBoolean(getString(R.string.is_profile_data_filled), document.data != null)
+                    }
+                    navigateHome()
+                }.addOnFailureListener {
+                    navigateHome()
+                }
         } else {
             if (response == null) {
                 finish()

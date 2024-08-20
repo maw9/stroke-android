@@ -6,13 +6,14 @@ import com.stroke.stroke_android.common.di.ktorNetworkModule
 import com.stroke.stroke_android.common.di.localStorageModule
 import com.stroke.stroke_android.feature.auth.di.authDataSourceModule
 import com.stroke.stroke_android.feature.auth.di.authRepositoryModule
-import com.stroke.stroke_android.feature.auth.di.authViewModelModule
 import com.stroke.stroke_android.feature.home.di.homePostsDataSourceModule
 import com.stroke.stroke_android.feature.home.di.homePostsRepositoryModule
 import com.stroke.stroke_android.feature.home.di.homeViewModelModule
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsDataSourceModule
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsRepositoryModule
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsViewModelModule
+import com.stroke.stroke_android.feature.profile.di.profileDataSource
+import com.stroke.stroke_android.feature.profile.di.profileRepositoryModule
 import com.stroke.stroke_android.feature.search.di.searchDataSourceModule
 import com.stroke.stroke_android.feature.search.di.searchRepositoryModule
 import com.stroke.stroke_android.feature.search.di.searchViewModelModule
@@ -41,6 +42,8 @@ class StrokeApp : Application() {
                 firebaseModule,
                 authRepositoryModule,
                 authDataSourceModule,
+                profileDataSource,
+                profileRepositoryModule,
             )
         }
 

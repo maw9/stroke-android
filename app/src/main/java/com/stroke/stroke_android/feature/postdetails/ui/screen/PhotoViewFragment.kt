@@ -30,6 +30,10 @@ class PhotoViewFragment : Fragment() {
             .load(imageUrl)
             .into(binding.photoView)
 
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     override fun onDestroyView() {
