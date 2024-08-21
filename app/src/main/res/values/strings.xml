@@ -10,7 +10,17 @@
     <string name="explore">Explore</string>
     <string name="search_for_anything">Search for anything</string>
     <string name="back">Back</string>
+    <string name="edit">Edit</string>
     <string name="no_result">No Result</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_me">About me</string>
+    <string name="phone_number">Phone number</string>
+    <string name="email">Email</string>
+    <string name="gender">Gender</string>
+    <string name="name">Name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="description">Description</string>
+    <string name="logout">Logout</string>
+    <string name="save">Save</string>
 </resources>
