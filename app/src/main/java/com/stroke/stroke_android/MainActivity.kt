@@ -13,11 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.stroke.stroke_android.feature.auth.data.repository.AuthRepository
 import com.stroke.stroke_android.feature.onboarding.ui.OnboardingActivity
+import com.stroke.stroke_android.feature.profile.data.repository.ProfileRepository
 import com.stroke.stroke_android.util.exception.UserNotLoginException
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -25,6 +23,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
     private val authRepository: AuthRepository by inject()
+    private val profileRepository: ProfileRepository by inject()
     private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,18 +89,19 @@ class MainActivity : AppCompatActivity() {
         val response = result.idpResponse
 
         if (result.resultCode == RESULT_OK) {
-            val uid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
-            Firebase.firestore
-                .collection("profiles")
-                .document(uid)
-                .get().addOnSuccessListener { document ->
-                    sharedPreferences.edit {
-                        putBoolean(getString(R.string.is_profile_data_filled), document.data != null)
+            lifecycleScope.launch {
+                profileRepository.getProfileByUid().fold(
+                    {
+                        sharedPreferences.edit(commit = true) {
+                            putBoolean(getString(R.string.is_profile_data_filled), it != null)
+                        }
+                        navigateHome()
+                    },
+                    {
+                        navigateHome()
                     }
-                    navigateHome()
-                }.addOnFailureListener {
-                    navigateHome()
-                }
+                )
+            }
         } else {
             if (response == null) {
                 finish()

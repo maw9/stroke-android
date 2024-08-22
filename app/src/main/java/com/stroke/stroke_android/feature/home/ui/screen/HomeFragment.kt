@@ -14,6 +14,7 @@ import com.stroke.stroke_android.feature.home.ui.adapter.PostsAdapter
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomePostsUIState
 import com.stroke.stroke_android.feature.home.ui.viewmodel.HomeViewModel
 import com.stroke.stroke_android.feature.postdetails.ui.screen.PostDetailsFragment
+import com.stroke.stroke_android.feature.profile.ui.screen.ProfileFragment
 import com.stroke.stroke_android.feature.profile.ui.screen.UpdateProfileFragment
 import com.stroke.stroke_android.feature.search.ui.screen.SearchFragment
 import org.koin.android.ext.android.inject
@@ -80,6 +81,20 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        binding.sivProfile.setOnClickListener { goToProfile() }
+    }
+
+    private fun goToProfile() {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fragmentContainerView,
+                ProfileFragment.getInstance(),
+                "profile"
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun goToProfileUpdateScreen() {
@@ -90,6 +105,7 @@ class HomeFragment : Fragment() {
                 UpdateProfileFragment.getInstance(),
                 "update_profile"
             )
+            .addToBackStack(null)
             .commit()
     }
 

@@ -1,10 +1,11 @@
 package com.stroke.stroke_android.feature.profile.data.repository
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentSnapshot
+import com.stroke.stroke_android.feature.profile.ui.model.UserProfile
 
 interface ProfileRepository {
 
-    suspend fun getProfileByUid(): Result<Task<DocumentSnapshot>>
+    suspend fun getProfileByUid(): Result<UserProfile?>
+
+    suspend fun saveProfile(profile: UserProfile): Result<String>
 
 }

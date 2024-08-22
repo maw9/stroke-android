@@ -14,6 +14,7 @@ import com.stroke.stroke_android.feature.postdetails.di.postDetailsRepositoryMod
 import com.stroke.stroke_android.feature.postdetails.di.postDetailsViewModelModule
 import com.stroke.stroke_android.feature.profile.di.profileDataSource
 import com.stroke.stroke_android.feature.profile.di.profileRepositoryModule
+import com.stroke.stroke_android.feature.profile.di.profileViewModel
 import com.stroke.stroke_android.feature.search.di.searchDataSourceModule
 import com.stroke.stroke_android.feature.search.di.searchRepositoryModule
 import com.stroke.stroke_android.feature.search.di.searchViewModelModule
@@ -44,6 +45,7 @@ class StrokeApp : Application() {
                 authDataSourceModule,
                 profileDataSource,
                 profileRepositoryModule,
+                profileViewModel,
             )
         }
 
