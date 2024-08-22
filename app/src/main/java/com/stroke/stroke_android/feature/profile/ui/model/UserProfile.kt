@@ -18,7 +18,7 @@ fun UserProfile.asProfileRequest(): ProfileRequest {
         name = name,
         phone = phone,
         email = email,
-        photoUrl = photoUrl?.formatPhotoUrl(),
+        photoUrl = photoUrl,
         gender = gender.value,
         description = description
     )

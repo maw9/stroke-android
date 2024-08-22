@@ -2,6 +2,7 @@ package com.stroke.stroke_android.feature.auth.domain.model
 
 import com.stroke.stroke_android.feature.profile.ui.model.Gender
 import com.stroke.stroke_android.feature.profile.ui.model.UserProfile
+import com.stroke.stroke_android.feature.profile.ui.model.formatPhotoUrl
 
 data class AuthUser(
     val id: String,

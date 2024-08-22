@@ -82,6 +82,9 @@ class UpdateProfileViewModel(
         viewModelScope.launch {
             authRepository.getCurrentUser().fold(
                 {
+                    _photoLiveData.value = it.profileUrl?.let { url ->
+                        Uri.parse(url)
+                    }
                     _profileDataLiveData.value = it.asUserProfile()
                     _updateProfileLiveData.value = UpdateProfileUIState.FetchProfileDone
                 },
@@ -99,6 +102,7 @@ class UpdateProfileViewModel(
         viewModelScope.launch {
             profileRepository.getProfileByUid().fold(
                 {
+                    _photoLiveData.value = it?.photoUrl?.let { url -> Uri.parse(url) }
                     _profileDataLiveData.value = it!!
                     _updateProfileLiveData.value = UpdateProfileUIState.FetchProfileDone
                 },
@@ -119,22 +123,29 @@ class UpdateProfileViewModel(
         _updateProfileLiveData.value = UpdateProfileUIState.Loading
         viewModelScope.launch {
             _photoLiveData.value?.let {
-                profileRepository.uploadProfilePhoto(it).fold(
-                    { downloadUrl ->
-                        downloadUrl.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                saveProfile(task.result.toString())
-                            } else {
-                                _updateProfileLiveData.value =
-                                    UpdateProfileUIState.Error("Task is not successful!")
+                if (it.toString().contains("https://lh3.googleusercontent.com") ||
+                    it.toString().contains("https://firebasestorage.googleapis.com")
+                ) {
+                    saveProfile(it.toString())
+                } else {
+                    profileRepository.uploadProfilePhoto(it).fold(
+                        { downloadUrl ->
+                            downloadUrl.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    saveProfile(task.result.toString())
+                                } else {
+                                    _updateProfileLiveData.value =
+                                        UpdateProfileUIState.Error("Task is not successful!")
+                                }
                             }
+                        },
+                        { error ->
+                            _updateProfileLiveData.value = UpdateProfileUIState.Error(
+                                error.message ?: "Something went wrong!"
+                            )
                         }
-                    },
-                    {
-                        _updateProfileLiveData.value =
-                            UpdateProfileUIState.Error(it.message ?: "Something went wrong!")
-                    }
-                )
+                    )
+                }
             }
         }
     }
@@ -150,8 +161,9 @@ class UpdateProfileViewModel(
                         _updateProfileLiveData.value = UpdateProfileUIState.Success(it)
                     },
                     {
-                        _updateProfileLiveData.value =
-                            UpdateProfileUIState.Error(it.message ?: "Something went wrong!")
+                        _updateProfileLiveData.value = UpdateProfileUIState.Error(
+                            it.message ?: "Something went wrong!"
+                        )
                     }
                 )
             }

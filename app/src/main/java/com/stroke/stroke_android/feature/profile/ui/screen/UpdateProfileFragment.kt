@@ -16,7 +16,6 @@ import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.FragmentUpdateProfileBinding
 import com.stroke.stroke_android.feature.profile.ui.model.Gender
 import com.stroke.stroke_android.feature.profile.ui.model.UserProfile
-import com.stroke.stroke_android.feature.profile.ui.model.formatPhotoUrl
 import com.stroke.stroke_android.feature.profile.ui.viewmodel.UpdateProfileUIState
 import com.stroke.stroke_android.feature.profile.ui.viewmodel.UpdateProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -121,7 +120,7 @@ class UpdateProfileFragment : Fragment() {
 
     private fun bindExistingProfileData(data: UserProfile) {
         if (!data.photoUrl.isNullOrEmpty())
-            Glide.with(requireContext()).load(data.photoUrl.formatPhotoUrl())
+            Glide.with(requireContext()).load(data.photoUrl)
                 .into(binding.ivProfile)
         binding.tieName.setText(data.name)
         binding.tiePhone.setText(data.phone)
