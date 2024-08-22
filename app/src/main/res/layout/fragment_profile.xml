@@ -46,6 +46,7 @@
         android:id="@+id/ivUserPhoto"
         android:layout_width="160dp"
         android:layout_height="160dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/tvName"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="0.5"

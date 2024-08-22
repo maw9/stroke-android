@@ -64,7 +64,7 @@ dependencies {
     implementation(libs.firebase.ui.auth)
     implementation(libs.firebase.firestore)
     implementation (libs.firebase.firestore.ktx)
-
+    implementation(libs.firebase.storage)
 
     // Glide
     implementation(libs.glide)

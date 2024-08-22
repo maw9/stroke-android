@@ -75,7 +75,7 @@
         android:id="@+id/tvPostDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_medium_2"
         android:layout_marginVertical="@dimen/margin_card_medium_2"
         android:ellipsize="end"
         android:maxLines="2"

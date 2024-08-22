@@ -19,7 +19,7 @@ class ProfileViewModel(private val profileRepository: ProfileRepository) : ViewM
     private val _profileLiveData: MutableLiveData<ProfileUIState> = MutableLiveData()
     val profileLiveData: LiveData<ProfileUIState> get() = _profileLiveData
 
-    private fun getProfile() {
+    fun getProfile() {
         _profileLiveData.value = ProfileUIState.Loading
         viewModelScope.launch {
             profileRepository.getProfileByUid().fold(
@@ -37,10 +37,6 @@ class ProfileViewModel(private val profileRepository: ProfileRepository) : ViewM
                 }
             )
         }
-    }
-
-    init {
-        getProfile()
     }
 
 }

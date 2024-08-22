@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.stroke.stroke_android.R
 import com.stroke.stroke_android.databinding.FragmentUpdateProfileBinding
 import com.stroke.stroke_android.feature.profile.ui.model.Gender
+import com.stroke.stroke_android.feature.profile.ui.model.UserProfile
 import com.stroke.stroke_android.feature.profile.ui.model.formatPhotoUrl
 import com.stroke.stroke_android.feature.profile.ui.viewmodel.UpdateProfileUIState
 import com.stroke.stroke_android.feature.profile.ui.viewmodel.UpdateProfileViewModel
@@ -82,20 +83,7 @@ class UpdateProfileFragment : Fragment() {
 
         viewModel.profileDataLiveData.observe(viewLifecycleOwner) {
             if (viewModel.isProfileFirstTimeFetch) {
-                if (!it.photoUrl.isNullOrEmpty())
-                    Glide.with(requireContext()).load(it.photoUrl.formatPhotoUrl())
-                        .into(binding.ivProfile)
-                binding.tieName.setText(it.name)
-                binding.tiePhone.setText(it.phone)
-                binding.tieEmail.setText(it.email)
-                binding.radioGpGender.check(
-                    when (it.gender) {
-                        Gender.Male -> R.id.rBtnMale
-                        Gender.Female -> R.id.rBtnFemale
-                        Gender.Other -> R.id.rBtnOther
-                    }
-                )
-                binding.tieDescription.setText(it.description)
+                bindExistingProfileData(it)
                 viewModel.doneProfileFetching()
             }
             binding.btnSave.isEnabled =
@@ -103,7 +91,7 @@ class UpdateProfileFragment : Fragment() {
         }
 
         binding.btnSave.setOnClickListener {
-            viewModel.saveProfile()
+            viewModel.submit()
         }
 
         viewModel.updateProfileLiveData.observe(viewLifecycleOwner) {
@@ -129,6 +117,23 @@ class UpdateProfileFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun bindExistingProfileData(data: UserProfile) {
+        if (!data.photoUrl.isNullOrEmpty())
+            Glide.with(requireContext()).load(data.photoUrl.formatPhotoUrl())
+                .into(binding.ivProfile)
+        binding.tieName.setText(data.name)
+        binding.tiePhone.setText(data.phone)
+        binding.tieEmail.setText(data.email)
+        binding.radioGpGender.check(
+            when (data.gender) {
+                Gender.Male -> R.id.rBtnMale
+                Gender.Female -> R.id.rBtnFemale
+                Gender.Other -> R.id.rBtnOther
+            }
+        )
+        binding.tieDescription.setText(data.description)
     }
 
     private fun showLoading() {

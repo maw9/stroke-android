@@ -2,6 +2,7 @@ package com.stroke.stroke_android.feature.profile.ui.viewmodel
 
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -44,6 +45,7 @@ class UpdateProfileViewModel(
     val photoLiveData: LiveData<Uri> get() = _photoLiveData
 
     fun onPhotoPick(uri: Uri) {
+        Log.i("Photo", uri.path.toString())
         _photoLiveData.value = uri
     }
 
@@ -109,11 +111,38 @@ class UpdateProfileViewModel(
         }
     }
 
-    fun saveProfile() {
+    fun submit() {
+        uploadPhoto()
+    }
+
+    private fun uploadPhoto() {
         _updateProfileLiveData.value = UpdateProfileUIState.Loading
         viewModelScope.launch {
+            _photoLiveData.value?.let {
+                profileRepository.uploadProfilePhoto(it).fold(
+                    { downloadUrl ->
+                        downloadUrl.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                saveProfile(task.result.toString())
+                            } else {
+                                _updateProfileLiveData.value =
+                                    UpdateProfileUIState.Error("Task is not successful!")
+                            }
+                        }
+                    },
+                    {
+                        _updateProfileLiveData.value =
+                            UpdateProfileUIState.Error(it.message ?: "Something went wrong!")
+                    }
+                )
+            }
+        }
+    }
+
+    private fun saveProfile(downloadUrl: String) {
+        viewModelScope.launch {
             _profileDataLiveData.value?.let { profile ->
-                profileRepository.saveProfile(profile).fold(
+                profileRepository.saveProfile(profile.copy(photoUrl = downloadUrl)).fold(
                     {
                         sharedPreferences.edit(commit = true) {
                             putBoolean("is_profile_data_filled", true)

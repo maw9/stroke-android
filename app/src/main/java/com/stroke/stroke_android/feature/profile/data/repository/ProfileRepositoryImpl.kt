@@ -1,7 +1,7 @@
 package com.stroke.stroke_android.feature.profile.data.repository
 
+import android.net.Uri
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentSnapshot
 import com.stroke.stroke_android.feature.auth.data.datasource.AuthDataSource
 import com.stroke.stroke_android.feature.profile.data.datasource.ProfileDataSource
 import com.stroke.stroke_android.feature.profile.ui.model.UserProfile
@@ -24,6 +24,10 @@ class ProfileRepositoryImpl(
 
     override suspend fun saveProfile(profile: UserProfile): Result<String> {
         return profileDataSource.saveProfile(profile)
+    }
+
+    override suspend fun uploadProfilePhoto(uri: Uri): Result<Task<Uri>> {
+        return profileDataSource.uploadProfilePhoto(uri)
     }
 
 }
